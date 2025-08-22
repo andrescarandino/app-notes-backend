@@ -60,8 +60,11 @@ app.delete('/api/notes/:id', (request, response) => {
 app.put('/api/notes/:id', (request, response) => {
     const id = Number(request.params.id)
     const note = notes.find(n => n.id === id)
+    if(!note){
+      return response.status(404).json({error: 'note not found'})
+    }
     const changedNote = { ...note, important: !note.important }
-    notes.map(note => note.id !== id ? note : changedNote)
+    notes = notes.map(note => note.id !== id ? note : changedNote)
     response.json(changedNote)
 })
 
