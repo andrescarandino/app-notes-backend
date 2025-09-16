@@ -9,6 +9,15 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-"content": "VS code is a pretty handy tool",
+"content": "asd",
+"important": true
+}
+
+### UPDATE
+PUT http://localhost:3001/api/notes/68b736c573d82c22a122b5bd
+Content-Type: application/json
+
+{
+"content": "asd",
 "important": true
 }
