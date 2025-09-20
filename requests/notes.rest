@@ -2,14 +2,14 @@
 GET http://localhost:3001/api/notes
 
 ### GET BY ID
-GET http://localhost:3001/api/notes/4
+GET http://localhost:3001/api/notes/68bb2f2c05fe37199a87c55d
 
 ### CREATE
 POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-"content": "asd",
+"content": "a",
 "important": true
 }
 
@@ -18,6 +18,9 @@ PUT http://localhost:3001/api/notes/68b736c573d82c22a122b5bd
 Content-Type: application/json
 
 {
-"content": "asd",
+"content": "",
 "important": true
 }
+
+### DELETE
+DELETE http://localhost:3001/api/notes/68bb2f2c05fe37199a87c55d
