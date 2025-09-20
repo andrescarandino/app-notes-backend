@@ -24,34 +24,26 @@ notesRouter.delete('/:id', async(request, response) => {
   response.status(204).end()
 })
 
-notesRouter.put('/:id', async(request, response, next) => {
+notesRouter.put('/:id', async(request, response) => {
   const body = request.body;
 
   const note = {
     content: body.content,
     important: body.important,
   }
-  try {
     const updatedNote = await Note.findByIdAndUpdate(request.params.id, note, { new: true, runValidators: true, context: 'query' })
     response.status(200).json(updatedNote);
-  } catch(exception) {
-    next(exception)
-  }
 })
 
-notesRouter.post('/', async(request, response, next) => {
+notesRouter.post('/', async(request, response) => {
   const body = request.body
 
   const note = new Note ({
     content: body.content,
     important: Boolean(body.important) || false,
   })
-  try {
     const savedNote = await note.save()
     response.status(201).json(savedNote)
-  } catch (error) {
-    next(error)
-  }
 })
 
 module.exports = notesRouter

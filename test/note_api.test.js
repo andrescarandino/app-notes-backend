@@ -83,6 +83,7 @@ test('a specific note can be viewed', async () => {
 
   assert.deepStrictEqual(resultNote.body, noteToView)
 })
+
 test('a note can be deleted', async () => {
   const notesAtStart = await helper.notesInDb()
   const noteToDelete = notesAtStart[0]
