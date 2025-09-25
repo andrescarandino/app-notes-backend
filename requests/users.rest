@@ -1,0 +1,27 @@
+### GET ALL
+GET http://localhost:3001/api/users
+
+### GET BY ID
+GET http://localhost:3001/api/notes/id
+
+### CREATE
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "mluukkai",
+    "name": "Matti Luukkainen",
+    "password": "salainen"
+}
+
+### UPDATE
+PUT http://localhost:3001/api/users/id
+Content-Type: application/json
+
+{
+"content": "",
+"important": true
+}
+
+### DELETE
+DELETE http://localhost:3001/api/users/id

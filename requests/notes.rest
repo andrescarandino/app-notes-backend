@@ -9,7 +9,9 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-"important": true
+"content": "User id of the note creator is at the start sent along the request",
+"important": true,
+"userId": "68d518f4c44e0dece2fe4765"
 }
 
 ### UPDATE
@@ -22,4 +24,4 @@ Content-Type: application/json
 }
 
 ### DELETE
-DELETE http://localhost:3001/api/notes/68bb2f2c05fe37199a87c55d
+DELETE http://localhost:3001/api/notes/68d51aba19e4ea5e1ccaccb7
