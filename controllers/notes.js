@@ -41,6 +41,9 @@ notesRouter.post('/', async(request, response) => {
   const body = request.body
 
   const user = await User.findById(body.userId)
+  if(!user){
+    return response.status(400).json({ error: "user not found" })
+  }
 
   const note = new Note ({
     content: body.content,
