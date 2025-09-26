@@ -7,8 +7,10 @@ GET http://localhost:3001/api/notes/68bb2f2c05fe37199a87c55d
 ### CREATE
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2OGQ1MThmNGM0NGUwZGVjZTJmZTQ3NjUiLCJpYXQiOjE3NTg4ODMxODN9.CPRPnILIXpQ8er1BnnJODANSooTNAet8aFk3KCoLtnw
 
 {
+"content": "new note, test jwt ",
 "important": true
 }
 
