@@ -1,5 +1,8 @@
 const Note = require('../models/note')
 const User = require('../models/user')
+const app = require('../app')
+const supertest = require('supertest')
+const api = supertest(app)
 
 const initialNotes = [
   {
@@ -30,6 +33,15 @@ const usersInDb = async () => {
   return users.map(u => u.toJSON())
 }
 
+
+const getRootToken = async () => {
+  const loginResponse = await api
+    .post('/api/login')
+    .send({ username: 'root', password: 'sekret' })
+  return loginResponse.body.token
+}
+
+
 module.exports = {
-  initialNotes, nonExistingId, notesInDb, usersInDb
+  initialNotes, nonExistingId, notesInDb, usersInDb, getRootToken
 }

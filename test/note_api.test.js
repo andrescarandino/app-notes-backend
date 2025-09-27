@@ -2,16 +2,15 @@ const { test, after, beforeEach, describe } = require('node:test')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const Note = require('../models/note.js')
 const app = require('../app')
 const api = supertest(app)
 
 const helper = require('./test_helper')
 
-const Note = require('../models/note')
-
 describe('when there is initially some notes saved', () => {
   beforeEach(async () => {
-    await Note.deleteMany({})
+      await Note.deleteMany({})
     await Note.insertMany(helper.initialNotes)
   })
 
@@ -23,9 +22,10 @@ describe('when there is initially some notes saved', () => {
   })
 
   test('all notes are returned', async () => {
+    const notesAtStart = await helper.notesInDb()
     const response = await api.get('/api/notes')
 
-    assert.strictEqual(response.body.length, helper.initialNotes.length)
+    assert.strictEqual(response.body.length, notesAtStart.length)
   })
 
   test('a specific note is within the returned notes', async () => {
@@ -71,15 +71,19 @@ describe('when there is initially some notes saved', () => {
     test('succeeds with valid data', async () => {
       const user = await helper.usersInDb();
 
+
       const newNote = {
         content: 'async/await simplifies making async calls',
         important: true,
         userId: user[0].id
       }
 
+      const token = await helper.getRootToken()
+
       await api
         .post('/api/notes')
         .send(newNote)
+        .set('Authorization', `Bearer ${token}`)
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
@@ -91,20 +95,22 @@ describe('when there is initially some notes saved', () => {
     })
 
     test('fails with status code 400 if data invalid', async () => {
+      const notesAtStart = await helper.notesInDb()
+
       const newNote = {
         important: true,
-        content: "asdasdasdas",
         userId: "asd121321"
       }
+      const token = await helper.getRootToken()
 
       await api
         .post('/api/notes')
+        .set('Authorization', `Bearer ${token}`)
         .send(newNote)
         .expect(400)
 
       const notesAtEnd = await helper.notesInDb()
-
-      assert.strictEqual(notesAtEnd.length, helper.initialNotes.length)
+      assert.strictEqual(notesAtEnd.length, notesAtStart.length)
     })
   })
 
@@ -119,14 +125,15 @@ describe('when there is initially some notes saved', () => {
 
       const notesAtEnd = await helper.notesInDb()
 
-      assert.strictEqual(notesAtEnd.length, helper.initialNotes.length - 1)
+      assert.strictEqual(notesAtEnd.length, notesAtStart.length - 1)
 
       const contents = notesAtEnd.map(r => r.content)
       assert(!contents.includes(noteToDelete.content))
     })
   })
-})
+
 
 after(async () => {
   await mongoose.connection.close()
+})
 })
